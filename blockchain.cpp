@@ -1,13 +1,8 @@
 #include "blockchain.h"
-#include "cryptopp/sha.h"
-#include "cryptopp/filters.h"
-#include "cryptopp/base64.h"
-#include "cryptopp/cryptlib.h"
-#include "cryptopp/hex.h"
 
 Blockchain::Blockchain() {
   Block *genesisBlock = new Block(
-				  0, "816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7", nullptr, 1465154705, "my genesis block!!" );
+				  0, "816534932c2b7154836da6afc367695e6337db8a921823784c14378abed4f7d7", "", 1465154705, "my genesis block!!" );
   chain.push_back(*genesisBlock);
 }
 
@@ -43,5 +38,5 @@ std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string
 void Blockchain::print() {
   //TODO: Print chain array
   std::cout << "Blockchain Array" << std::endl;
-  std::cout << "Genesis Block: " << /**(chain[0]).print() <<*/ std::endl;
+  std::cout << "Genesis Block: " << (*chain[0]).print() << std::endl;
 }

@@ -1,7 +1,11 @@
 #include <iostream>
 #include <vector>
-#include "constants.h"
 #include "block.h"
+#include "cryptopp/sha.h"
+#include "cryptopp/filters.h"
+#include "cryptopp/base64.h"
+#include "cryptopp/cryptlib.h"
+#include "cryptopp/hex.h"
 
 class Blockchain {
  private:

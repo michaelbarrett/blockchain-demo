@@ -1,1 +1,3 @@
-const int BLOCKCHAIN_ARRAY_MAX_SIZE = 999;
+// global constants go here
+
+const double PI = 3.1415926535;
