@@ -16,5 +16,5 @@ class Blockchain {
   std::string string_to_hex(const std::string& input);
   std::string calculateHash(int i, std::string ph, int ts, std::string d);
   void generateNextBlock(std::string blockData);
-  void print();
+  void print() const;
 };

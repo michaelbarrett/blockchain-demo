@@ -34,16 +34,6 @@ std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string
   return SHA256(s);
 }
 
-/* const generateNextBlock = (blockData: string) => {
-    const previousBlock: Block = getLatestBlock();
-    const nextIndex: number = previousBlock.index + 1;
-    const nextTimestamp: number = new Date().getTime() / 1000;
-    const nextHash: string = calculateHash(nextIndex, previousBlock.hash, nextTimestamp, blockData);
-    const newBlock: Block = new Block(nextIndex, nextHash, previousBlock.hash, nextTimestamp, blockData);
-    return newBlock;
-};
-*/
-
 //generates the next block with specified blockData and puts it into the chain
 //with calculated hash
 void Blockchain::generateNextBlock(std::string blockData) {
@@ -55,9 +45,10 @@ void Blockchain::generateNextBlock(std::string blockData) {
   chain.push_back(*nb);
 }
 
-void Blockchain::print() {
+void Blockchain::print() const {
   //TODO: Print chain array
   std::cout << "Blockchain Array" << std::endl;
-  //Block *first = chain.front();
-  std::cout << "Genesis Block: " << (chain.back()).print() << std::endl;
+  for (std::vector<Block>::const_iterator it = chain.begin(); it != chain.end(); it++) {
+    std::cout << (*it).print() << "\n";
+  }
 }

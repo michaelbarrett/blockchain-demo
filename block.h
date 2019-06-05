@@ -16,7 +16,7 @@ class Block {
   Block(int i, std::string h, std::string ph, int ts, std::string d);
   Block();
   void generateNextBlock(std::string blockData);
-  std::string print();
+  std::string print() const;
 
   friend class Blockchain;
 };
