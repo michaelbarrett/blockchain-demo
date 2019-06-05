@@ -1,5 +1,3 @@
-#include <string>
-#include <sstream>
 #include "block.h"
 
 Block::Block(int i, std::string h, std::string ph, int ts, std::string d) :

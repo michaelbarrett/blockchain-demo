@@ -1,5 +1,6 @@
 #include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "constants.h"
 
@@ -16,4 +17,6 @@ class Block {
   Block();
   void generateNextBlock(std::string blockData);
   std::string print();
+
+  friend class Blockchain;
 };

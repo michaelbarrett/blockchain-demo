@@ -46,10 +46,13 @@ std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string
 
 //generates the next block with specified blockData and puts it into the chain
 //with calculated hash
-void generateNextBlock(std::string blockData) {
-  Block *previousBlock = chain.back();
+void Blockchain::generateNextBlock(std::string blockData) {
+  Block *previousBlock = &(chain.back());
   int nextIndex = previousBlock->index + 1;
   int nextTimeStamp = std::time(nullptr);
+  std::string nextHash = calculateHash(nextIndex, previousBlock->hash, nextTimeStamp, blockData);
+  Block *nb = new Block(nextIndex, nextHash, previousBlock->hash, nextTimeStamp, blockData);
+  chain.push_back(*nb);
 }
 
 void Blockchain::print() {
