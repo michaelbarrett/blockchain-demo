@@ -31,7 +31,7 @@ std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string
   std::stringstream ss;
   ss << i << ph << ts << d;
   std::string s = ss.str();
-  return SHA256(s);
+  return string_to_hex(SHA256(s));
 }
 
 //generates the next block with specified blockData and puts it into the chain
