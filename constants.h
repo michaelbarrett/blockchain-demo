@@ -1,0 +1,1 @@
+const int BLOCKCHAIN_ARRAY_MAX_SIZE = 999;
