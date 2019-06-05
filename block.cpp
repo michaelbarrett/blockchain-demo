@@ -1,3 +1,4 @@
+#include <string>
 #include "block.h"
 
 Block::Block(int i, std::string h, std::string ph, int ts, std::string d) :
@@ -9,7 +10,12 @@ Block::Block(int i, std::string h, std::string ph, int ts, std::string d) :
 Block::Block() : index(-1), hash("<hash>"), prevHash("<prevhash>"),
 		 timeStamp(-1), data("<data>") {}
 
-void Block::print() {
-  std::cout << "Block " << index << ", hash = " << hash << ", prevHash = " << prevHash <<
-    ", timeStamp = " << timeStamp << ", data = " << data << std::endl;
+std::string Block::print() {
+  std::string s = "";
+  s.append("Block ");
+  /*    ("Block ") + std::string(index) + std::string(", hash = ")
+    + hash + std::string(", prevHash = ") + prevHash
+    + std::string(", timeStamp = ") + std::string(timeStamp)
+    + std::string(", data = ") + data + std::endl;*/
+  return s;
 }

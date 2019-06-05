@@ -13,5 +13,5 @@ class Block {
  public:
   Block(int i, std::string h, std::string ph, int ts, std::string d);
   Block();
-  void print();
+  std::string print();
 };

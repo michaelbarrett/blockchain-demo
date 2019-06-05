@@ -38,5 +38,6 @@ std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string
 void Blockchain::print() {
   //TODO: Print chain array
   std::cout << "Blockchain Array" << std::endl;
-  std::cout << "Genesis Block: " << (*chain[0]).print() << std::endl;
+  //Block *first = chain.front();
+  std::cout << "Genesis Block: " << (chain.front()).print() << std::endl;
 }
