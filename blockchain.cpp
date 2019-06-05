@@ -27,6 +27,7 @@ std::string Blockchain::SHA256(std::string data) {
   return std::string((char*)abDigest, CryptoPP::SHA256::DIGESTSIZE);
 }
 
+//calculates hash
 std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string d) {
   std::stringstream ss;
   ss << i << ph << ts << d;
@@ -45,10 +46,40 @@ void Blockchain::generateNextBlock(std::string blockData) {
   chain.push_back(*nb);
 }
 
+//checks if new block is valid
+bool Blockchain::isValidNewBlock(Block newBlock, Block prevBlock) {
+  if (newBlock.index - 1 != prevBlock.index) {
+    std::cout << "block index invalid" << std::endl;
+    return false;
+  }
+  else if (newBlock.prevHash != prevBlock.hash) {
+    std::cout << "block prevHash invalid" << std::endl;
+    return false;
+  }
+  else if (newBlock.hash != calculateHash(newBlock.index, newBlock.prevHash,
+					  newBlock.timeStamp, newBlock.data)) {
+    std::cout << "block hash recalculated to be invalid" << std::endl;
+    return false;
+  }
+  return true;
+}
+
+//checks if structure types are valid
+//later: fix to truly get types, incorporating lvalues, rvalues, etc
+bool Blockchain::isValidBlockStructure(Block b) {
+  std::string intStr = "int";
+  std::string strStr = "std::string";
+  return (typeid(b.index).name() == intStr
+	  && typeid(b.hash).name() == strStr
+	  && typeid(b.prevHash).name() == strStr
+	  && typeid(b.timeStamp).name() == intStr
+	  && typeid(b.data).name() == strStr);
+}
+
 void Blockchain::print() const {
   //TODO: Print chain array
   std::cout << "Blockchain Array" << std::endl;
   for (std::vector<Block>::const_iterator it = chain.begin(); it != chain.end(); it++) {
-    std::cout << (*it).print() << "\n";
+    std::cout << (*it).print();
   }
 }

@@ -8,11 +8,11 @@ int main(int argc, char *argv[]) {
 
   Blockchain *b = new Blockchain();
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   (*b).generateNextBlock("alpha");
-  std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   (*b).generateNextBlock("beta");
-  std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   (*b).generateNextBlock("gamma");
 
   b->print();
