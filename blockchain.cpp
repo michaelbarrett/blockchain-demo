@@ -6,7 +6,7 @@ Blockchain::Blockchain() {
   chain.push_back(*genesisBlock);
 }
 
-std::string Blockchain::string_to_hex(const std::string& input) {
+std::string Blockchain::string_to_hex(const std::string& input) const {
   static const char* const lut = "0123456789ABCDEF";
   size_t len = input.length();
   std::string output;
@@ -19,7 +19,7 @@ std::string Blockchain::string_to_hex(const std::string& input) {
   return output;
 }
 
-std::string Blockchain::SHA256(std::string data) {
+std::string Blockchain::SHA256(std::string data) const {
   CryptoPP::byte const* pbData = (CryptoPP::byte*)data.data();
   unsigned int nDataLen = data.length();
   CryptoPP::byte abDigest[CryptoPP::SHA256::DIGESTSIZE];
@@ -28,7 +28,7 @@ std::string Blockchain::SHA256(std::string data) {
 }
 
 //calculates hash
-std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string d) {
+std::string Blockchain::calculateHash(int i, std::string ph, int ts, std::string d) const {
   std::stringstream ss;
   ss << i << ph << ts << d;
   std::string s = ss.str();
@@ -47,7 +47,7 @@ void Blockchain::generateNextBlock(std::string blockData) {
 }
 
 //checks if new block is valid
-bool Blockchain::isValidNewBlock(Block newBlock, Block prevBlock) {
+bool Blockchain::isValidNewBlock(Block newBlock, Block prevBlock) const {
   if (newBlock.index - 1 != prevBlock.index) {
     std::cout << "block index invalid" << std::endl;
     return false;
@@ -64,17 +64,38 @@ bool Blockchain::isValidNewBlock(Block newBlock, Block prevBlock) {
   return true;
 }
 
-//checks if structure types are valid
-//later: fix to truly get types, incorporating lvalues, rvalues, etc
-bool Blockchain::isValidBlockStructure(Block b) {
-  std::string intStr = "int";
-  std::string strStr = "std::string";
-  return (typeid(b.index).name() == intStr
-	  && typeid(b.hash).name() == strStr
-	  && typeid(b.prevHash).name() == strStr
-	  && typeid(b.timeStamp).name() == intStr
-	  && typeid(b.data).name() == strStr);
+/*Validates a whole chain. First, we check that the mysteryChain genesis block matches this genesisBlock. Then, we validate every consecutive block*/
+bool Blockchain::isValidChain(std::vector<Block> mysteryChain) {
+  //if genesis is not valid
+  if ((mysteryChain[0].print) != (chain[0].print)) {
+    return false;
+  }
+  for (int i = 1; i < mysteryChain.size(); i++) {
+    if (!isValidNewBlock(mysteryChain[i], mysteryChain[i-1))) {
+      return false;
+    }
+  }
+  return true;
 }
+
+//if a longer chain is received from the node, we replace the current chain
+void Blockchain::replaceChain(std::vector<Block> newChain) {
+  if (isValidChain(newChain) && (newChain.size() > chain.size())) {
+    std::cout << "Received blockchain is valid. Replacing current blockchain with received."
+	      << std::endl;
+    chain = newChain;
+  }
+}
+
+/*const replaceChain = (newBlocks: Block[]) => {
+    if (isValidChain(newBlocks) && newBlocks.length > getBlockchain().length) {
+        console.log('Received blockchain is valid. Replacing current blockchain with received blockchain');
+        blockchain = newBlocks;
+        broadcastLatest();
+    } else {
+        console.log('Received blockchain invalid');
+    }
+    };*/
 
 void Blockchain::print() const {
   //TODO: Print chain array
@@ -82,4 +103,6 @@ void Blockchain::print() const {
   for (std::vector<Block>::const_iterator it = chain.begin(); it != chain.end(); it++) {
     std::cout << (*it).print();
   }
+  std::cout << "Blocks 1 & 0 Valid?" << std::endl;
+  std::cout << isValidNewBlock(chain[1], chain[0]) << std::endl;
 }

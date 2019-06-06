@@ -12,11 +12,11 @@ class Blockchain {
   std::vector<Block> chain;
  public:
   Blockchain();
-  std::string SHA256(std::string data);
-  std::string string_to_hex(const std::string& input);
-  std::string calculateHash(int i, std::string ph, int ts, std::string d);
+  std::string SHA256(std::string data) const;
+  std::string string_to_hex(const std::string& input) const;
+  std::string calculateHash(int i, std::string ph, int ts, std::string d) const;
   void generateNextBlock(std::string blockData);
-  bool isValidNewBlock(Block newBlock, Block prevBlock);
-  bool isValidBlockStructure(Block b);
+  bool isValidNewBlock(Block newBlock, Block prevBlock) const;
+  bool isValidBlockStructure(Block b) const;
   void print() const;
 };
